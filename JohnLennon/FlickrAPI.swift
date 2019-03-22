@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import SwiftyJSON
 
 enum Category:String{
     case interestingPhotos = "flickr.interestingness.getList"
@@ -19,7 +20,7 @@ struct FlickrAPI{
     private static let API_KEY = "a6d819499131071f158fd740860a5a88"
     private static let baseURL =  "https://api.flickr.com/services/rest"
     
-    private static func flickrURL(for category: Category, with params: [String:String]?)->URL{
+    static func flickrURL(for category: Category, with params: [String:String]?)->URL{
         
         var components = URLComponents(string: baseURL)!
         
@@ -51,5 +52,7 @@ struct FlickrAPI{
         
         return components.url!
     }
+    
+    
     
 }
