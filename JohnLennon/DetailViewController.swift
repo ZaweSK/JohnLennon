@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DetailViewController: UIViewController {
+class DetailViewController: UIViewController , UIScrollViewDelegate{
 
     var photo : Photo!
     
@@ -33,6 +33,8 @@ class DetailViewController: UIViewController {
             
             }.ensure {
                 self.spinner.stopAnimating()
+                
+              
                 
             }.catch{ error in
 
@@ -65,6 +67,18 @@ class DetailViewController: UIViewController {
         
     }
     
+    @IBOutlet var scrollView: UIScrollView! {
+        didSet{
+            scrollView.minimumZoomScale = 1/25
+            scrollView.maximumZoomScale = 1.0
+            scrollView.delegate = self
+        }
+    }
+    
+    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        return imageView
+    }
+    
     
     @IBOutlet var spinner: UIActivityIndicatorView!
     
@@ -78,4 +92,30 @@ class DetailViewController: UIViewController {
     
     @IBOutlet var imageView: UIImageView!
     
+    
+   // scroll view shit
+    
+    
+    @IBOutlet var imageViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var imageViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet var imageViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var imageViewTrailingConstraint: NSLayoutConstraint!
+    
+    func scrollViewDidZoom(_ scrollView: UIScrollView) {
+        updateConstraintsForSize(view.bounds.size)
+    }
+    
+    func updateConstraintsForSize(_ size: CGSize){
+        
+        
+        let yOffset = max(0, (size.height - imageView.frame.height) / 2)
+        imageViewTopConstraint.constant = yOffset - topView.bounds.height
+        imageViewBottomConstraint.constant = yOffset
+        
+        let xOffset = max(0, (size.width - imageView.frame.width) / 2)
+        imageViewLeadingConstraint.constant = xOffset
+        imageViewTrailingConstraint.constant = xOffset
+        
+        view.layoutIfNeeded()
+    }
 }

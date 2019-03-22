@@ -50,10 +50,21 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fSl-GJ-Vko">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0SK-SP-Ysc">
                                 <rect key="frame" x="0.0" y="73.5" width="375" height="593.5"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </imageView>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" placeholderIntrinsicWidth="100" placeholderIntrinsicHeight="100" translatesAutoresizingMaskIntoConstraints="NO" id="fSl-GJ-Vko">
+                                        <rect key="frame" x="0.0" y="0.0" width="100" height="100"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="fSl-GJ-Vko" firstAttribute="leading" secondItem="0SK-SP-Ysc" secondAttribute="leading" id="OJA-6e-G7U"/>
+                                    <constraint firstItem="fSl-GJ-Vko" firstAttribute="top" secondItem="0SK-SP-Ysc" secondAttribute="top" id="Od5-Oj-Cfo"/>
+                                    <constraint firstItem="fSl-GJ-Vko" firstAttribute="bottom" secondItem="0SK-SP-Ysc" secondAttribute="bottom" id="hO3-Bd-Vk0"/>
+                                    <constraint firstItem="fSl-GJ-Vko" firstAttribute="trailing" secondItem="0SK-SP-Ysc" secondAttribute="trailing" id="raB-Ze-4P9"/>
+                                </constraints>
+                            </scrollView>
                             <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="fWJ-T6-duf">
                                 <rect key="frame" x="177.5" y="323.5" width="20" height="20"/>
                                 <color key="color" red="0.1861468205" green="0.67856581100000002" blue="0.94798937189999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -91,21 +102,26 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="aOr-zx-VBd" firstAttribute="height" relation="greaterThanOrEqual" secondItem="WtH-N5-GZc" secondAttribute="height" multiplier="0.08" id="0OD-Ob-ZAW"/>
-                            <constraint firstAttribute="bottom" secondItem="fSl-GJ-Vko" secondAttribute="bottom" id="1Y5-S1-yW9"/>
+                            <constraint firstItem="0SK-SP-Ysc" firstAttribute="top" secondItem="aOr-zx-VBd" secondAttribute="bottom" id="5vh-IW-eov"/>
                             <constraint firstItem="fWJ-T6-duf" firstAttribute="centerX" secondItem="WtH-N5-GZc" secondAttribute="centerX" id="Cks-6d-jx5"/>
                             <constraint firstItem="aOr-zx-VBd" firstAttribute="leading" secondItem="HmP-qp-eOj" secondAttribute="leading" id="DIM-V1-dLP"/>
-                            <constraint firstItem="fSl-GJ-Vko" firstAttribute="leading" secondItem="WtH-N5-GZc" secondAttribute="leading" id="K1g-f5-4hQ"/>
+                            <constraint firstAttribute="bottom" secondItem="0SK-SP-Ysc" secondAttribute="bottom" id="FzI-qO-Hef"/>
                             <constraint firstItem="fWJ-T6-duf" firstAttribute="centerY" secondItem="WtH-N5-GZc" secondAttribute="centerY" id="Kab-B8-qBA"/>
-                            <constraint firstAttribute="trailing" secondItem="fSl-GJ-Vko" secondAttribute="trailing" id="Kbp-vm-Spl"/>
                             <constraint firstItem="HmP-qp-eOj" firstAttribute="trailing" secondItem="aOr-zx-VBd" secondAttribute="trailing" id="Q7K-Sp-0zk"/>
+                            <constraint firstItem="0SK-SP-Ysc" firstAttribute="leading" secondItem="WtH-N5-GZc" secondAttribute="leading" id="Z3z-Sc-vQ9"/>
                             <constraint firstItem="aOr-zx-VBd" firstAttribute="top" secondItem="HmP-qp-eOj" secondAttribute="top" id="crp-Bm-2Sa"/>
                             <constraint firstItem="YtJ-iP-Qo3" firstAttribute="height" secondItem="WtH-N5-GZc" secondAttribute="height" multiplier="0.04" id="dzc-VE-5Kc"/>
-                            <constraint firstItem="fSl-GJ-Vko" firstAttribute="top" secondItem="aOr-zx-VBd" secondAttribute="bottom" id="vus-JT-d3r"/>
+                            <constraint firstAttribute="trailing" secondItem="0SK-SP-Ysc" secondAttribute="trailing" id="id8-i0-28n"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HmP-qp-eOj"/>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="fSl-GJ-Vko" id="P17-Dy-gme"/>
+                        <outlet property="imageViewBottomConstraint" destination="hO3-Bd-Vk0" id="Ctu-KG-7qE"/>
+                        <outlet property="imageViewLeadingConstraint" destination="OJA-6e-G7U" id="b5I-SI-PNl"/>
+                        <outlet property="imageViewTopConstraint" destination="Od5-Oj-Cfo" id="Pnz-Be-6TG"/>
+                        <outlet property="imageViewTrailingConstraint" destination="raB-Ze-4P9" id="2bX-gO-CWJ"/>
+                        <outlet property="scrollView" destination="0SK-SP-Ysc" id="5qa-8A-09k"/>
                         <outlet property="spinner" destination="fWJ-T6-duf" id="1rd-31-q5j"/>
                         <outlet property="titleLabel" destination="QNU-Kz-I6D" id="V0B-mh-HAb"/>
                         <outlet property="topView" destination="aOr-zx-VBd" id="xam-ci-Z3w"/>
