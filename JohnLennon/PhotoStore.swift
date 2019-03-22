@@ -18,6 +18,8 @@ class PhotoStore
             
             let url = FlickrAPI.flickrURL(for: category, with: nil)
             
+
+            
             Alamofire.request(url).validate().responseJSON() { response  in
                 
                 print(response.request)
@@ -27,6 +29,8 @@ class PhotoStore
                 case .success(let value):
                     
                     let resultJSON : JSON = JSON(value)
+                    
+                    
                     
                     seal.fulfill(resultJSON)
                     
