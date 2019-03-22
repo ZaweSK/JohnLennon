@@ -10,19 +10,27 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    
+    var photos = [Photo]()
     
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
+        
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
         PhotoStore.fetchPhotos(for: .interestingPhotos)
             
             .done { photos in
-            
-                print(photos)
-            
-            
+                
+                self.photos =  photos
+                
+                self.tableView.reloadData()
+                
+            }.ensure {
+                
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
             }.catch { error in
                 
                 let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
@@ -36,16 +44,16 @@ class TableViewController: UITableViewController {
 
     // MARK: - Table view data source
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        // #warning Incomplete implementation, return the number of sections
-        return 0
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
-        return 0
+        return photos.count
     }
-
     
-
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell", for: indexPath)
+        
+        let photo = photos[indexPath.row]
+        cell.textLabel?.text = photo.title
+        
+        return cell
+    }
 }
