@@ -62,7 +62,8 @@ class TableViewController: UITableViewController {
             if let index = tableView.indexPathForSelectedRow {
                 
                 let detailVC = segue.destination as! DetailViewController
-                detailVC.title = photos[index.row].title
+
+                detailVC.photo = photos[index.row]
                 
             }
         }

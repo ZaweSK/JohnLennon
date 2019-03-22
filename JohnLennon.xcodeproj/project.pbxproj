@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		5EDBC8C298826DA5DAEED8AE /* Pods_JohnLennon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 553305B3D442EF4A6AD6D57C /* Pods_JohnLennon.framework */; };
 		D073BCEE2244DA9900D83F76 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073BCED2244DA9900D83F76 /* AppDelegate.swift */; };
-		D073BCF02244DA9900D83F76 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073BCEF2244DA9900D83F76 /* ViewController.swift */; };
 		D073BCF32244DA9900D83F76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D073BCF12244DA9900D83F76 /* Main.storyboard */; };
 		D073BCF52244DA9C00D83F76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D073BCF42244DA9C00D83F76 /* Assets.xcassets */; };
 		D073BCF82244DA9C00D83F76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D073BCF62244DA9C00D83F76 /* LaunchScreen.storyboard */; };
@@ -25,7 +24,6 @@
 		858353812661494C971603AE /* Pods-JohnLennon.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JohnLennon.release.xcconfig"; path = "Pods/Target Support Files/Pods-JohnLennon/Pods-JohnLennon.release.xcconfig"; sourceTree = "<group>"; };
 		D073BCEA2244DA9900D83F76 /* JohnLennon.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JohnLennon.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D073BCED2244DA9900D83F76 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		D073BCEF2244DA9900D83F76 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		D073BCF22244DA9900D83F76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		D073BCF42244DA9C00D83F76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D073BCF72244DA9C00D83F76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -81,12 +79,11 @@
 			isa = PBXGroup;
 			children = (
 				D073BCFF2244DDA400D83F76 /* FlickrAPI.swift */,
+				D073BD032244E10100D83F76 /* PhotoStore.swift */,
 				D073BCED2244DA9900D83F76 /* AppDelegate.swift */,
-				D073BCEF2244DA9900D83F76 /* ViewController.swift */,
 				D073BCF12244DA9900D83F76 /* Main.storyboard */,
 				D073BD012244E0C900D83F76 /* TableViewController.swift */,
 				D073BD072244FE7D00D83F76 /* DetailViewController.swift */,
-				D073BD032244E10100D83F76 /* PhotoStore.swift */,
 				D073BD052244F74D00D83F76 /* Photo.swift */,
 				D073BCF42244DA9C00D83F76 /* Assets.xcassets */,
 				D073BCF62244DA9C00D83F76 /* LaunchScreen.storyboard */,
@@ -230,7 +227,6 @@
 				D073BD062244F74D00D83F76 /* Photo.swift in Sources */,
 				D073BD042244E10100D83F76 /* PhotoStore.swift in Sources */,
 				D073BD002244DDA400D83F76 /* FlickrAPI.swift in Sources */,
-				D073BCF02244DA9900D83F76 /* ViewController.swift in Sources */,
 				D073BCEE2244DA9900D83F76 /* AppDelegate.swift in Sources */,
 				D073BD022244E0C900D83F76 /* TableViewController.swift in Sources */,
 				D073BD082244FE7D00D83F76 /* DetailViewController.swift in Sources */,

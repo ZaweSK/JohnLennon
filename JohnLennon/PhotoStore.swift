@@ -72,4 +72,35 @@ class PhotoStore
         return Photo(title: title, remoteUrl: url, photoID: id)
     }
     
+    
+    static func fetchImage(for photo: Photo)->Promise<UIImage>{
+        
+        return Promise { seal in
+            
+            do {
+                
+                let imageData = try Data(contentsOf: photo.remoteURL)
+                
+                if let image = UIImage(data: imageData){
+                    
+                    seal.fulfill(image)
+                
+                }else {
+                    
+                    seal.reject(PhotoFetchError.unableToCreatePhotoFromData)
+                }
+                
+    
+            } catch {
+                
+                seal.reject(error)
+            }
+            
+        }
+    }
+}
+
+
+enum PhotoFetchError: Error {
+    case unableToCreatePhotoFromData
 }
