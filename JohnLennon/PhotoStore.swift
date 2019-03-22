@@ -12,17 +12,15 @@ import SwiftyJSON
 
 class PhotoStore
 {
-    static func fetchPhotos(for category: Category )->Promise<JSON>{
+    static func fetchPhotos(for category: Category )->Promise<[Photo]>{
         
         return Promise { seal in
             
             let url = FlickrAPI.flickrURL(for: category, with: nil)
             
-
+            var photos = [Photo]()
             
             Alamofire.request(url).validate().responseJSON() { response  in
-                
-                print(response.request)
                 
                 switch response.result {
                     
@@ -30,9 +28,9 @@ class PhotoStore
                     
                     let resultJSON : JSON = JSON(value)
                     
+                    photos = parse(resultJSON)
                     
-                    
-                    seal.fulfill(resultJSON)
+                    seal.fulfill(photos)
                     
                     
                 case .failure(let error):
@@ -45,8 +43,33 @@ class PhotoStore
     }
     
     
-    static func parsePhotosJSON(_ json: JSON){
+    static func parse(_ json: JSON)->[Photo]{
         
+        guard let photosArrayJSON = json["photos"]["photo"].array else { return []}
+        
+        var photosArray = [Photo]()
+        
+        for photoJSON in photosArrayJSON {
+         
+            if let photo = parseSinglePhoto(photoJSON) {
+                
+                photosArray.append(photo)
+            }
+        }
+        return photosArray
+    }
+    
+    static func parseSinglePhoto(_ json: JSON)->Photo? {
+        
+        guard
+        let title = json["title"].string,
+        let id = json["id"].string,
+        let stringURL = json["url_h"].string,
+        let url = URL(string: stringURL)
+            else {
+                return nil
+        }
+        return Photo(title: title, remoteUrl: url, photoID: id)
     }
     
 }

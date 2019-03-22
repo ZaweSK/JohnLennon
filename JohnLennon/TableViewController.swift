@@ -12,14 +12,15 @@ class TableViewController: UITableViewController {
     
     
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         PhotoStore.fetchPhotos(for: .interestingPhotos)
             
-            .done { json in
+            .done { photos in
             
-                print(json)
+                print(photos)
             
             
             }.catch { error in

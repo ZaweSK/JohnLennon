@@ -13,13 +13,12 @@ struct Photo {
     let title: String
     let remoteURL : URL
     let photoID: String
-    let dateTaken: Date
+   
     
-    init(title: String, remoteUrl: URL, photoID: String, dateTaken: Date){
+    init(title: String, remoteUrl: URL, photoID: String){
         self.title = title
         self.remoteURL = remoteUrl
         self.photoID = photoID
-        self.dateTaken = dateTaken
     }
     
 }
