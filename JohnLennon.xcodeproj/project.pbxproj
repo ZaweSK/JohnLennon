@@ -12,6 +12,7 @@
 		D073BCF32244DA9900D83F76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D073BCF12244DA9900D83F76 /* Main.storyboard */; };
 		D073BCF52244DA9C00D83F76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D073BCF42244DA9C00D83F76 /* Assets.xcassets */; };
 		D073BCF82244DA9C00D83F76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D073BCF62244DA9C00D83F76 /* LaunchScreen.storyboard */; };
+		D073BD002244DDA400D83F76 /* FlickrAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073BCFF2244DDA400D83F76 /* FlickrAPI.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		D073BCF42244DA9C00D83F76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D073BCF72244DA9C00D83F76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D073BCF92244DA9C00D83F76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D073BCFF2244DDA400D83F76 /* FlickrAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlickrAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		D073BCEC2244DA9900D83F76 /* JohnLennon */ = {
 			isa = PBXGroup;
 			children = (
+				D073BCFF2244DDA400D83F76 /* FlickrAPI.swift */,
 				D073BCED2244DA9900D83F76 /* AppDelegate.swift */,
 				D073BCEF2244DA9900D83F76 /* ViewController.swift */,
 				D073BCF12244DA9900D83F76 /* Main.storyboard */,
@@ -135,6 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D073BD002244DDA400D83F76 /* FlickrAPI.swift in Sources */,
 				D073BCF02244DA9900D83F76 /* ViewController.swift in Sources */,
 				D073BCEE2244DA9900D83F76 /* AppDelegate.swift in Sources */,
 			);
