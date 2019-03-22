@@ -38,8 +38,6 @@ class TableViewController: UITableViewController {
                 alertController.addAction(alertAction)
                 self.present(alertController, animated: true, completion: nil)
         }
-        
-        
     }
 
     // MARK: - Table view data source
@@ -56,4 +54,6 @@ class TableViewController: UITableViewController {
         
         return cell
     }
+    
+    // MARK: - Navigation
 }
