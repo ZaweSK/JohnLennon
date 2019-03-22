@@ -56,4 +56,18 @@ class TableViewController: UITableViewController {
     }
     
     // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            
+            if let index = tableView.indexPathForSelectedRow {
+                
+                let detailVC = segue.destination as! DetailViewController
+                detailVC.title = photos[index.row].title
+                
+            }
+        }
+    }
+    
 }
+
+
