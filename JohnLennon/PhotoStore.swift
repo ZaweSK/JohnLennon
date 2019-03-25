@@ -84,8 +84,8 @@ class PhotoStore
                 
                 if let image = UIImage(data: imageData){
                     
-                    seal.fulfill(image)
-                
+                        seal.fulfill(image)
+
                 }else {
                     
                     seal.reject(PhotoFetchError.unableToCreatePhotoFromData)
