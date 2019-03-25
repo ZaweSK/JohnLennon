@@ -25,7 +25,7 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
         super.viewDidAppear(animated)
         
         
-        PhotoStore.fetchImage(for: photo).done { image in
+        PhotoFetcher.fetchImage(for: photo).done { image in
             
             self.imageView.image = image
             

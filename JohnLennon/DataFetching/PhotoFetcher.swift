@@ -10,9 +10,9 @@ import Foundation
 import PromiseKit
 import SwiftyJSON
 
-class PhotoStore
+class PhotoFetcher
 {
-    static func fetchPhotos(category: Category )->Promise<[Photo]>{
+    static func fetchPhotos(forCategory category: Category )->Promise<[Photo]>{
         
         return Promise { seal in
             

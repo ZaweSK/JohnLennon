@@ -11,16 +11,34 @@ import UIKit
 private let reuseIdentifier = "Cell"
 
 class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
-    var array = ["a", "b","c","d", "e", "f", "g", "h", "i"]
+    
+    var photos = [Photo]()
     
     override func viewDidLoad() {
+        
         super.viewDidLoad()
-
-        // Register cell classes
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "photoItemCell")
         
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
+        PhotoFetcher.fetchPhotos(forCategory: .interestingPhotos)
+            
+            .done { photos in
+                
+                self.photos =  photos
+                
+                self.collectionView.reloadData()
+                
+            }.ensure {
+                
+                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
+            }.catch { error in
+                
+                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                alertController.addAction(alertAction)
+                self.present(alertController, animated: true, completion: nil)
+        }
     }
 
 
@@ -30,7 +48,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of items
-        return array.count
+        return photos.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -40,6 +58,11 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     
         return cell
     }
+    
+    
+    
+    
+    
     
     // MARK: - Collection View Flow Layout delegate methods
     
@@ -82,7 +105,7 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
     struct Constants {
         
         static let collectionViewInset: CGFloat = 5
-        static let numbersOfItemsInRow  = 5
+        static let numbersOfItemsInRow  = 3
         static let itemsHorizontalSpacing: CGFloat = 2
         static let itemsVerticalSpacing : CGFloat = 2
     }

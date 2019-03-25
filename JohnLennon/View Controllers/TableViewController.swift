@@ -19,7 +19,7 @@ class TableViewController: UITableViewController {
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        PhotoStore.fetchPhotos(category: .interestingPhotos)
+        PhotoFetcher.fetchPhotos(forCategory: .interestingPhotos)
             
             .done { photos in
                 
@@ -39,9 +39,9 @@ class TableViewController: UITableViewController {
                 self.present(alertController, animated: true, completion: nil)
         }
     }
+    
 
     // MARK: - Table view data source
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return photos.count
     }
