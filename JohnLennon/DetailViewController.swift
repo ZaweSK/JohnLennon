@@ -16,11 +16,8 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
         
         super.viewDidLoad()
         
-        
         titleLabel.text = photo.title
         spinner.startAnimating()
-        
-        
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -31,10 +28,12 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
             
             self.imageView.image = image
             
+            self.setZoomParametersForSize(self.scrollView.bounds.size)
+            
+            self.updateConstraintsForSize(self.view.bounds.size)
+            
             }.ensure {
                 self.spinner.stopAnimating()
-                
-              
                 
             }.catch{ error in
 
@@ -43,6 +42,19 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
                 
                 self.setErrorText()
         }
+    }
+    
+    
+    func setZoomParametersForSize(_ scrollViewSize: CGSize){
+        
+        let imageSize = imageView.image!.size
+        let widthScale = scrollViewSize.width / imageSize.width
+        let heightScale = scrollViewSize.height / imageSize.height
+        
+        let minScale = min(widthScale,heightScale)
+        scrollView.minimumZoomScale = 1/25
+        scrollView.maximumZoomScale = 1.0
+        scrollView.zoomScale = minScale
     }
     
     func setErrorText(){
@@ -69,8 +81,6 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
     
     @IBOutlet var scrollView: UIScrollView! {
         didSet{
-            scrollView.minimumZoomScale = 1/25
-            scrollView.maximumZoomScale = 1.0
             scrollView.delegate = self
         }
     }
@@ -100,22 +110,21 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
     @IBOutlet var imageViewTopConstraint: NSLayoutConstraint!
     @IBOutlet var imageViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet var imageViewTrailingConstraint: NSLayoutConstraint!
-    
+
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         updateConstraintsForSize(view.bounds.size)
     }
-    
+
     func updateConstraintsForSize(_ size: CGSize){
-        
-        
+
         let yOffset = max(0, (size.height - imageView.frame.height) / 2)
         imageViewTopConstraint.constant = yOffset - topView.bounds.height
         imageViewBottomConstraint.constant = yOffset
-        
+
         let xOffset = max(0, (size.width - imageView.frame.width) / 2)
         imageViewLeadingConstraint.constant = xOffset
         imageViewTrailingConstraint.constant = xOffset
-        
+
         view.layoutIfNeeded()
     }
 }

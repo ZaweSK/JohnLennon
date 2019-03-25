@@ -12,7 +12,7 @@ import SwiftyJSON
 
 class PhotoStore
 {
-    static func fetchPhotos(for category: Category )->Promise<[Photo]>{
+    static func fetchPhotos(category: Category )->Promise<[Photo]>{
         
         return Promise { seal in
             
@@ -69,6 +69,7 @@ class PhotoStore
             else {
                 return nil
         }
+        
         return Photo(title: title, remoteUrl: url, photoID: id)
     }
     
@@ -90,7 +91,6 @@ class PhotoStore
                     seal.reject(PhotoFetchError.unableToCreatePhotoFromData)
                 }
                 
-    
             } catch {
                 
                 seal.reject(error)

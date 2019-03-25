@@ -19,7 +19,7 @@ class TableViewController: UITableViewController {
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
-        PhotoStore.fetchPhotos(for: .interestingPhotos)
+        PhotoStore.fetchPhotos(category: .interestingPhotos)
             
             .done { photos in
                 
