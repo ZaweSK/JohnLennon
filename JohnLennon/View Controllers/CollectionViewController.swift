@@ -18,6 +18,12 @@ class CollectionViewController: UICollectionViewController
 {
     
     var photoDataSource: PhotoDataSource!
+    var imageStore: ImageStore!
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+    }
     
     override func viewDidLoad() {
         
@@ -41,28 +47,7 @@ class CollectionViewController: UICollectionViewController
                     self.present(alertController, animated: true, completion: nil)
     
             }
-        
-//        PhotoFetcher.fetchPhotos(forCategory: .interestingPhotos)
-//
-//            .done { photos in
-//
-//                self.photoDataSource.photos = photos
-//
-//            }.ensure {
-//
-//                UIApplication.shared.isNetworkActivityIndicatorVisible = false
-//
-//                self.collectionView.reloadSections(IndexSet(integer: 0))
-//
-//            }.catch { error in
-//
-//                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-//                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-//                alertController.addAction(alertAction)
-//                self.present(alertController, animated: true, completion: nil)
-//        }
         }
-        
     }
 
    // MARK: UICollectionViewDataSource methods
@@ -77,18 +62,27 @@ class CollectionViewController: UICollectionViewController
 
             return cell
 
-        }else {
+        } else {
 
             return nil
         }
     }
 
     override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(#function)
         
         guard let photo = photoDataSource.photos?[indexPath.row] else {return}
         
+        if let image = imageStore.image(for: photo.photoID) {
+            
+            let photoCell = cell as! CollectionViewCell
+            photoCell.update(with: image)
+            
+            return
+        }
+        
         ImageFetcher.fetchImage(for: photo).done { image in
+            
+            self.imageStore.setImage(image, for: photo.photoID)
             
             if let cell = self.isCellDisplayed(for: photo) {
                 
@@ -125,7 +119,7 @@ class CollectionViewController: UICollectionViewController
                 let detailVC = segue.destination as! DetailViewController
                 
                 detailVC.photo = photoDataSource.photos?[indexPath.row]
-                
+                detailVC.imageStore = imageStore
             }
         }
     }

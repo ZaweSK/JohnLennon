@@ -11,43 +11,83 @@ import UIKit
 class DetailViewController: UIViewController , UIScrollViewDelegate{
 
     var photo : Photo!
+    var imageStore : ImageStore!
+    
+    // MARK: - @IBOutlests
+    
+   
+
+    
+    
+
+    @IBAction func goBack(_ sender: UIButton) {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    @IBOutlet var titleLabel: UILabel!
+    @IBOutlet var topView: UIView!
+    @IBOutlet var imageView: UIImageView!
+    @IBOutlet var scrollView: UIScrollView!
+    @IBOutlet var spinner: UIActivityIndicatorView!
+    
+        // Image in scroll view constraints:
+    
+    @IBOutlet var imageViewLeadingConstraint: NSLayoutConstraint!
+    @IBOutlet var imageViewTopConstraint: NSLayoutConstraint!
+    @IBOutlet var imageViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet var imageViewTrailingConstraint: NSLayoutConstraint!
+    
+    // MARK: - VC Life Cycle
     
     override func viewDidLoad() {
-        
         super.viewDidLoad()
+        scrollView.delegate = self
         
         titleLabel.text = photo.title
         spinner.startAnimating()
     }
     
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        if let image = imageStore.image(for: photo.photoID) {
+            self.spinner.stopAnimating()
+            imageView.image = image
+            centerImage()
+            return
+        }
         
         ImageFetcher.fetchImage(for: photo).done { image in
             
+            self.imageStore.setImage(image, for: self.photo.photoID)
+            
             self.imageView.image = image
             
-            self.setZoomParametersForSize(self.scrollView.bounds.size)
-            
-            self.updateConstraintsForSize(self.view.bounds.size)
-            
             }.ensure {
+                
                 self.spinner.stopAnimating()
                 
+                if self.imageView.image == nil {
+                    
+                     self.imageView.image = UIImage(named: "placeholderImage")
+                }
+                
+               self.centerImage()
+                
             }.catch{ error in
-
-                self.imageView.image = UIImage(named: "placeholderImage")
-                
-                self.setZoomParametersForSize(self.scrollView.bounds.size)
-                
-                self.updateConstraintsForSize(self.view.bounds.size)
                 
                 self.setErrorText()
         }
     }
     
+    // MARK: Image centering, zooming
+    
+    func centerImage(){
+        
+        setZoomParametersForSize(self.scrollView.bounds.size)
+        
+        updateConstraintsForSize(self.view.bounds.size)
+    }
     
     func setZoomParametersForSize(_ scrollViewSize: CGSize){
         
@@ -60,6 +100,22 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
         scrollView.maximumZoomScale = 1.0
         scrollView.zoomScale = minScale
     }
+    
+    func updateConstraintsForSize(_ size: CGSize){
+        
+        let yOffset = max(0, (size.height - imageView.frame.height) / 2)
+        imageViewTopConstraint.constant = yOffset - topView.bounds.height
+        imageViewBottomConstraint.constant = yOffset
+        
+        let xOffset = max(0, (size.width - imageView.frame.width) / 2)
+        imageViewLeadingConstraint.constant = xOffset
+        imageViewTrailingConstraint.constant = xOffset
+        
+        view.layoutIfNeeded()
+    }
+    
+    
+    // MARK: - Error Handling
     
     func setErrorText(){
         let label = UILabel()
@@ -83,52 +139,13 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
         
     }
     
-    @IBOutlet var scrollView: UIScrollView! {
-        didSet{
-            scrollView.delegate = self
-        }
-    }
+    // MARK: - Scroll View Delegate methods
     
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
         return imageView
     }
-    
-    
-    @IBOutlet var spinner: UIActivityIndicatorView!
-    
-    @IBAction func goBack(_ sender: UIButton) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    @IBOutlet var titleLabel: UILabel!
-    
-    @IBOutlet var topView: UIView!
-    
-    @IBOutlet var imageView: UIImageView!
-    
-    
-   // scroll view shit
-    
-    
-    @IBOutlet var imageViewLeadingConstraint: NSLayoutConstraint!
-    @IBOutlet var imageViewTopConstraint: NSLayoutConstraint!
-    @IBOutlet var imageViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet var imageViewTrailingConstraint: NSLayoutConstraint!
 
     func scrollViewDidZoom(_ scrollView: UIScrollView) {
         updateConstraintsForSize(view.bounds.size)
-    }
-
-    func updateConstraintsForSize(_ size: CGSize){
-
-        let yOffset = max(0, (size.height - imageView.frame.height) / 2)
-        imageViewTopConstraint.constant = yOffset - topView.bounds.height
-        imageViewBottomConstraint.constant = yOffset
-
-        let xOffset = max(0, (size.width - imageView.frame.width) / 2)
-        imageViewLeadingConstraint.constant = xOffset
-        imageViewTrailingConstraint.constant = xOffset
-
-        view.layoutIfNeeded()
     }
 }

@@ -14,6 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     
     var photoDataSource = PhotoDataSource()
+    var imageStore = ImageStore()
 
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -27,7 +28,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let tableVC = navController.viewControllers![1] as! CollectionViewController
         
         collectionVC.photoDataSource = photoDataSource
+        collectionVC.imageStore = imageStore
+        
         tableVC.photoDataSource = photoDataSource
+        tableVC.imageStore = imageStore
         
         
         return true

@@ -11,6 +11,7 @@ import UIKit
 class TableViewController: UITableViewController {
     
     var photoDataSource: PhotoDataSource!
+    var imageStore: ImageStore!
     
     override func viewDidLoad() {
         
@@ -63,7 +64,7 @@ class TableViewController: UITableViewController {
                 let detailVC = segue.destination as! DetailViewController
                 
                 detailVC.photo = photoDataSource.photos?[index.row]
-                
+                detailVC.imageStore = imageStore
             }
         }
     }
