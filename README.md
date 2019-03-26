@@ -12,6 +12,10 @@ Once the image is downloaded, it is put in a cache.
 
 (it's my app, I can name it how I want)
 
+<img align="right" src="johnLennon.gif">
+
+
+
 ## Implemented bits
 * download data as JSON asynchronously using PromiseKit, Alamofire
 * parsing the JSON file using SwiftyJSON
