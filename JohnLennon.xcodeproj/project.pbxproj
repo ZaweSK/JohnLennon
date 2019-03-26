@@ -91,7 +91,6 @@
 				D073BCED2244DA9900D83F76 /* AppDelegate.swift */,
 				D073BCF42244DA9C00D83F76 /* Assets.xcassets */,
 				D073BCF92244DA9C00D83F76 /* Info.plist */,
-				D0FABE0C22490AD300DE0E11 /* PhotoDataSource.swift */,
 			);
 			path = JohnLennon;
 			sourceTree = "<group>";
@@ -108,6 +107,7 @@
 		D0FABE072248ECD000DE0E11 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				D0FABE0C22490AD300DE0E11 /* PhotoDataSource.swift */,
 				D0FABE042248CE6400DE0E11 /* CollectionViewController.swift */,
 				D073BD072244FE7D00D83F76 /* DetailViewController.swift */,
 				D073BD012244E0C900D83F76 /* TableViewController.swift */,

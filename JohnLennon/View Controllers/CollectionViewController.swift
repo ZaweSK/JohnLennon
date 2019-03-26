@@ -55,20 +55,37 @@ class CollectionViewController: UICollectionViewController {
     
         PhotoFetcher.fetchImage(for: photo).done { image in
 
-            guard let photoIndex = self.photoDataSource.photos.index(of: photo) else {return}
-
-            let photoIndexPath = IndexPath(item: photoIndex, section: 0)
-
-            if let cell = collectionView.cellForItem(at: photoIndexPath) as? CollectionViewCell {
+            if let cell = self.isCellDisplayed(for: photo) {
 
                 cell.update(with: image)
             }
 
             }.catch {error in
-                print(error)
+                
+                if let cell = self.isCellDisplayed(for: photo) {
+                    cell.imageNotFound()
+                }
+        }
+    }
+    
+    func isCellDisplayed(for photo: Photo)->CollectionViewCell? {
+        
+        guard let photoIndex = self.photoDataSource.photos.index(of: photo) else { return nil}
+        
+        let photoIndexPath = IndexPath(item: photoIndex, section: 0)
+        
+        if let cell = collectionView.cellForItem(at: photoIndexPath) as? CollectionViewCell {
+
+            return cell
+
+        }else {
+
+            return nil
         }
     }
 }
+
+
 
 
 

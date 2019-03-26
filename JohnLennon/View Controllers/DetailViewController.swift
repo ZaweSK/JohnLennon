@@ -38,8 +38,11 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
                 
             }.catch{ error in
 
-                print("Unable to retrieve image")
                 self.imageView.image = UIImage(named: "placeholderImage")
+                
+                self.setZoomParametersForSize(self.scrollView.bounds.size)
+                
+                self.updateConstraintsForSize(self.view.bounds.size)
                 
                 self.setErrorText()
         }
@@ -62,15 +65,15 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
         let label = UILabel()
         label.text = "Sorry, Could not retrieve image"
         label.textAlignment = .center
-        label.font = UIFont(name: "American Typewriter", size: 15)
+        label.font = UIFont(name: "American Typewriter", size: 60)
         label.textColor = UIColor.darkGray
         label.alpha = 0
         
         imageView.addSubview(label)
         
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: label.superview!.topAnchor, constant: 20)
+        label.centerXAnchor.constraint(equalTo: label.superview!.centerXAnchor).isActive = true
+        label.topAnchor.constraint(equalTo: label.superview!.topAnchor, constant: 20).isActive = true
         
         view.layoutIfNeeded()
         

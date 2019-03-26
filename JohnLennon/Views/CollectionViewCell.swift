@@ -25,6 +25,11 @@ class CollectionViewCell: UICollectionViewCell {
         }
     }
     
+    func imageNotFound(){
+        spinner.stopAnimating()
+        imageView.image = UIImage(named: "placeholderImage")
+    }
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         
