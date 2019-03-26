@@ -16,14 +16,13 @@ private let reuseIdentifier = "Cell"
 class CollectionViewController: UICollectionViewController
 
 {
+    // MARK: - Stored properities
     
     var photoDataSource: PhotoDataSource!
     var imageStore: ImageStore!
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        
-    }
+   
+    // MARK: - VC life cycle methods
     
     override func viewDidLoad() {
         

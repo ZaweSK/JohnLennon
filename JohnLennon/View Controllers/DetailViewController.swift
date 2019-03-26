@@ -14,11 +14,6 @@ class DetailViewController: UIViewController , UIScrollViewDelegate{
     var imageStore : ImageStore!
     
     // MARK: - @IBOutlests
-    
-   
-
-    
-    
 
     @IBAction func goBack(_ sender: UIButton) {
         self.dismiss(animated: true, completion: nil)

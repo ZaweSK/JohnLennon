@@ -8,10 +8,14 @@
 
 import UIKit
 
-class TableViewController: UITableViewController {
+class TableViewController: UITableViewController
+{
+    //MARK: - Stored Properities
     
     var photoDataSource: PhotoDataSource!
     var imageStore: ImageStore!
+    
+    // MARK: - VC life cycle
     
     override func viewDidLoad() {
         

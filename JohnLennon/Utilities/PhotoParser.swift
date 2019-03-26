@@ -13,38 +13,6 @@ import SwiftyJSON
 class PhotoParser
     
 {
-    // MARKL: - Fetching Photos JSON
-    
-//    static func fetchPhotos(forCategory category: Category )->Promise<[Photo]>{
-//
-//        return Promise { seal in
-//
-//            let url = FlickrAPI.flickrURL(for: category, with: nil)
-//
-//            var photos = [Photo]()
-//
-//            Alamofire.request(url).validate().responseJSON() { response  in
-//
-//                switch response.result {
-//
-//                case .success(let value):
-//
-//                    let resultJSON : JSON = JSON(value)
-//
-//                    photos = parse(resultJSON)
-//
-//                    seal.fulfill(photos)
-//
-//
-//                case .failure(let error):
-//
-//                    seal.reject(error)
-//
-//                }
-//            }
-//        }
-//    }
-    
     // MARK: - Parsing Photos JSON
     
     static func parse(_ json: JSON)->[Photo]{

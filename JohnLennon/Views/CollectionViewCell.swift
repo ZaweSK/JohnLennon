@@ -11,11 +11,9 @@ import UIKit
 class CollectionViewCell: UICollectionViewCell {
     
     @IBOutlet var spinner: UIActivityIndicatorView!
-    
     @IBOutlet var imageView: UIImageView!
     
-    
-        func update(with image: UIImage?){
+    func update(with image: UIImage?){
         if let imageToDisplay = image {
             spinner.stopAnimating()
             imageView.image = imageToDisplay

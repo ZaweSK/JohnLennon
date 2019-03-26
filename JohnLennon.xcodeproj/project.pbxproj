@@ -73,6 +73,7 @@
 				D073BD032244E10100D83F76 /* PhotoParser.swift */,
 				D02C659F224A16D900C647EB /* ImageFetcher.swift */,
 				D073BCFF2244DDA400D83F76 /* FlickrAPI.swift */,
+				D02C65A2224A1DF200C647EB /* ImageStore.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -105,7 +106,6 @@
 				D073BCED2244DA9900D83F76 /* AppDelegate.swift */,
 				D073BCF42244DA9C00D83F76 /* Assets.xcassets */,
 				D073BCF92244DA9C00D83F76 /* Info.plist */,
-				D02C65A2224A1DF200C647EB /* ImageStore.swift */,
 			);
 			path = JohnLennon;
 			sourceTree = "<group>";
