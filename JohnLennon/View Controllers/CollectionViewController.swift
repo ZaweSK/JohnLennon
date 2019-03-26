@@ -83,6 +83,21 @@ class CollectionViewController: UICollectionViewController {
             return nil
         }
     }
+    
+    
+    // MARK: - Navigation
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showDetail" {
+            
+            if let indexPath = collectionView.indexPathsForSelectedItems?.first {
+                
+                let detailVC = segue.destination as! DetailViewController
+                
+                detailVC.photo = photoDataSource.photos[indexPath.row]
+                
+            }
+        }
+    }
 }
 
 

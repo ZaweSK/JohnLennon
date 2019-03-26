@@ -173,6 +173,7 @@
                                 <connections>
                                     <outlet property="imageView" destination="2Ki-uQ-ICf" id="xPF-2E-jPg"/>
                                     <outlet property="spinner" destination="Jsx-pf-4Il" id="5WQ-9F-6Fu"/>
+                                    <segue destination="O1N-U7-wE4" kind="show" identifier="showDetail" id="j9i-UQ-hgT"/>
                                 </connections>
                             </collectionViewCell>
                         </cells>
@@ -212,4 +213,7 @@
         <image name="collectionView" width="30" height="30"/>
         <image name="tableView" width="30" height="30"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="j9i-UQ-hgT"/>
+    </inferredMetricsTieBreakers>
 </document>
