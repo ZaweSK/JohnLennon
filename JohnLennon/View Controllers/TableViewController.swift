@@ -10,47 +10,46 @@ import UIKit
 
 class TableViewController: UITableViewController {
     
-    var photos = [Photo]()
-    
+    var photoDataSource: PhotoDataSource!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        PhotoFetcher.fetchPhotos(forCategory: .interestingPhotos)
+        if photoDataSource.photos == nil {
             
-            .done { photos in
-                
-                self.photos =  photos
-                
-                self.tableView.reloadData()
-                
-            }.ensure {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
+            photoDataSource.fetchPhotos(forCategory: .interestingPhotos).ensure {
                 
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 
-            }.catch { error in
+                self.tableView.reloadData()
                 
-                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(alertAction)
-                self.present(alertController, animated: true, completion: nil)
+                }.catch { error in
+                    
+                    let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                    let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(alertAction)
+                    self.present(alertController, animated: true, completion: nil)
+                    
+            }
         }
     }
     
-
+    
     // MARK: - Table view data source
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        return photoDataSource.photos?.count ?? 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "photoCell", for: indexPath)
         
-        let photo = photos[indexPath.row]
-        cell.textLabel?.text = photo.title
+        if let photo = photoDataSource.photos?[indexPath.row] {
+            
+            cell.textLabel?.text = photo.title
+        }
         
         return cell
     }
@@ -62,8 +61,8 @@ class TableViewController: UITableViewController {
             if let index = tableView.indexPathForSelectedRow {
                 
                 let detailVC = segue.destination as! DetailViewController
-
-                detailVC.photo = photos[index.row]
+                
+                detailVC.photo = photoDataSource.photos?[index.row]
                 
             }
         }

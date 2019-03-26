@@ -13,64 +13,63 @@ import Alamofire
 
 private let reuseIdentifier = "Cell"
 
-class CollectionViewController: UICollectionViewController {
+class CollectionViewController: UICollectionViewController
+
+{
     
-    var photoDataSource = PhotoDataSource()
+    var photoDataSource: PhotoDataSource!
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
         
-        collectionView.dataSource = photoDataSource
-        
-        UIApplication.shared.isNetworkActivityIndicatorVisible = true
-        
-        PhotoFetcher.fetchPhotos(forCategory: .interestingPhotos)
+        if photoDataSource.photos == nil {
             
-            .done { photos in
-                
-                self.photoDataSource.photos = photos
-                
-            }.ensure {
+            UIApplication.shared.isNetworkActivityIndicatorVisible = true
+            
+            photoDataSource.fetchPhotos(forCategory: .interestingPhotos).ensure {
                 
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
                 
                 self.collectionView.reloadSections(IndexSet(integer: 0))
                 
-            }.catch { error in
-                
-                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
-                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
-                alertController.addAction(alertAction)
-                self.present(alertController, animated: true, completion: nil)
-        }
-    }
-
-   // MARK: UICollectionViewDataSource
-
-    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        print(#function)
-
-        let photo = photoDataSource.photos[indexPath.row]
+                }.catch { error in
+                    
+                    let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+                    let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+                    alertController.addAction(alertAction)
+                    self.present(alertController, animated: true, completion: nil)
     
-        PhotoFetcher.fetchImage(for: photo).done { image in
-
-            if let cell = self.isCellDisplayed(for: photo) {
-
-                cell.update(with: image)
             }
-
-            }.catch {error in
-                
-                if let cell = self.isCellDisplayed(for: photo) {
-                    cell.imageNotFound()
-                }
+        
+//        PhotoFetcher.fetchPhotos(forCategory: .interestingPhotos)
+//
+//            .done { photos in
+//
+//                self.photoDataSource.photos = photos
+//
+//            }.ensure {
+//
+//                UIApplication.shared.isNetworkActivityIndicatorVisible = false
+//
+//                self.collectionView.reloadSections(IndexSet(integer: 0))
+//
+//            }.catch { error in
+//
+//                let alertController = UIAlertController(title: "Error", message: error.localizedDescription, preferredStyle: .alert)
+//                let alertAction = UIAlertAction(title: "OK", style: .cancel, handler: nil)
+//                alertController.addAction(alertAction)
+//                self.present(alertController, animated: true, completion: nil)
+//        }
         }
+        
     }
+
+   // MARK: UICollectionViewDataSource methods
     
     func isCellDisplayed(for photo: Photo)->CollectionViewCell? {
         
-        guard let photoIndex = self.photoDataSource.photos.index(of: photo) else { return nil}
+        guard let photoIndex = self.photoDataSource.photos?.index(of: photo) else { return nil}
         
         let photoIndexPath = IndexPath(item: photoIndex, section: 0)
         
@@ -83,9 +82,41 @@ class CollectionViewController: UICollectionViewController {
             return nil
         }
     }
+
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(#function)
+        
+        guard let photo = photoDataSource.photos?[indexPath.row] else {return}
+        
+        ImageFetcher.fetchImage(for: photo).done { image in
+            
+            if let cell = self.isCellDisplayed(for: photo) {
+                
+                cell.update(with: image)
+            }
+            
+            }.catch {error in
+                
+                if let cell = self.isCellDisplayed(for: photo) {
+                    cell.imageNotFound()
+                }
+        }
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return photoDataSource.photos?.count ?? 0
+    }
+    
+    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoItemCell", for: indexPath) as! CollectionViewCell
+        
+        return cell
+    }
     
     
     // MARK: - Navigation
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "showDetail" {
             
@@ -93,7 +124,7 @@ class CollectionViewController: UICollectionViewController {
                 
                 let detailVC = segue.destination as! DetailViewController
                 
-                detailVC.photo = photoDataSource.photos[indexPath.row]
+                detailVC.photo = photoDataSource.photos?[indexPath.row]
                 
             }
         }
