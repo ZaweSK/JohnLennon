@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Photo {
+struct Photo: Equatable {
     
     let title: String
     let remoteURL : URL
@@ -21,4 +21,7 @@ struct Photo {
         self.photoID = photoID
     }
     
+    static func == (lhs: Photo, rhs: Photo) -> Bool {
+        return lhs.photoID == rhs.photoID
+    }
 }

@@ -7,16 +7,21 @@
 //
 
 import UIKit
+import AlamofireImage
+import Alamofire
+
 
 private let reuseIdentifier = "Cell"
 
-class CollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class CollectionViewController: UICollectionViewController {
     
-    var photos = [Photo]()
+    var photoDataSource = PhotoDataSource()
     
     override func viewDidLoad() {
         
         super.viewDidLoad()
+        
+        collectionView.dataSource = photoDataSource
         
         UIApplication.shared.isNetworkActivityIndicatorVisible = true
         
@@ -24,13 +29,13 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
             
             .done { photos in
                 
-                self.photos =  photos
-                
-                self.collectionView.reloadData()
+                self.photoDataSource.photos = photos
                 
             }.ensure {
                 
                 UIApplication.shared.isNetworkActivityIndicatorVisible = false
+                
+                self.collectionView.reloadSections(IndexSet(integer: 0))
                 
             }.catch { error in
                 
@@ -41,42 +46,58 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         }
     }
 
+   // MARK: UICollectionViewDataSource
 
+    override func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        print(#function)
 
-    // MARK: UICollectionViewDataSource
+        let photo = photoDataSource.photos[indexPath.row]
+    
+        PhotoFetcher.fetchImage(for: photo).done { image in
 
+            guard let photoIndex = self.photoDataSource.photos.index(of: photo) else {return}
 
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
-        return photos.count
+            let photoIndexPath = IndexPath(item: photoIndex, section: 0)
+
+            if let cell = collectionView.cellForItem(at: photoIndexPath) as? CollectionViewCell {
+
+                cell.update(with: image)
+            }
+
+            }.catch {error in
+                print(error)
+        }
     }
+}
 
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "photoItemCell", for: indexPath)
+
+
+// MARK: - Collection View Flow Layout delegate methods
+
+extension CollectionViewController:  UICollectionViewDelegateFlowLayout {
     
-        cell.backgroundColor = UIColor.blue
     
-        return cell
+    struct Constants {
+        
+        static let collectionViewInset: CGFloat = 5
+        static let itemsHorizontalSpacing: CGFloat = 2
+        static let itemsVerticalSpacing : CGFloat = 2
     }
     
-    
-    
-    
-    
-    
-    // MARK: - Collection View Flow Layout delegate methods
-    
+    var numbersOfItemsInRow: Int {
+        return inLandscape ? 5 : 3
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         
         let itemsContainerWidth = view.bounds.width - totalHorizontalPadding
         
-        let itemWidth = (itemsContainerWidth - totalItemsHorizontalSpacing) / CGFloat(Constants.numbersOfItemsInRow)
+        let itemWidth = (itemsContainerWidth - totalItemsHorizontalSpacing) / CGFloat(numbersOfItemsInRow)
         
         return CGSize(width: itemWidth, height: itemWidth)
-
+        
     }
-   
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return Constants.itemsHorizontalSpacing
     }
@@ -92,23 +113,24 @@ class CollectionViewController: UICollectionViewController, UICollectionViewDele
         return UIEdgeInsets(top: inset, left: inset, bottom: inset, right: inset)
     }
     
-
+    
     
     var totalHorizontalPadding: CGFloat {
         return Constants.collectionViewInset * 2
     }
     
     var totalItemsHorizontalSpacing: CGFloat {
-        return CGFloat((Constants.numbersOfItemsInRow - 1)) * Constants.itemsHorizontalSpacing
+        return CGFloat((numbersOfItemsInRow - 1)) * Constants.itemsHorizontalSpacing
     }
     
-    struct Constants {
-        
-        static let collectionViewInset: CGFloat = 5
-        static let numbersOfItemsInRow  = 3
-        static let itemsHorizontalSpacing: CGFloat = 2
-        static let itemsVerticalSpacing : CGFloat = 2
+    var inLandscape : Bool {
+        switch traitCollection.verticalSizeClass {
+        case .compact:
+            return true
+        case .regular:
+            return false
+        default: return false
+        }
     }
     
-
 }

@@ -11,7 +11,10 @@ import PromiseKit
 import SwiftyJSON
 
 class PhotoFetcher
+    
 {
+    // MARKL: - Fetching Photos JSON
+    
     static func fetchPhotos(forCategory category: Category )->Promise<[Photo]>{
         
         return Promise { seal in
@@ -42,6 +45,7 @@ class PhotoFetcher
         }
     }
     
+    // MARK: - Parsing Photos JSON
     
     static func parse(_ json: JSON)->[Photo]{
         
@@ -50,7 +54,7 @@ class PhotoFetcher
         var photosArray = [Photo]()
         
         for photoJSON in photosArrayJSON {
-         
+            
             if let photo = parseSinglePhoto(photoJSON) {
                 
                 photosArray.append(photo)
@@ -62,10 +66,10 @@ class PhotoFetcher
     static func parseSinglePhoto(_ json: JSON)->Photo? {
         
         guard
-        let title = json["title"].string,
-        let id = json["id"].string,
-        let stringURL = json["url_h"].string,
-        let url = URL(string: stringURL)
+            let title = json["title"].string,
+            let id = json["id"].string,
+            let stringURL = json["url_h"].string,
+            let url = URL(string: stringURL)
             else {
                 return nil
         }
@@ -74,28 +78,35 @@ class PhotoFetcher
     }
     
     
+    // MARK: - Fetching image asynchronously
+    
     static func fetchImage(for photo: Photo)->Promise<UIImage>{
         
-        return Promise { seal in
+        let bgq = DispatchQueue.global(qos: .userInitiated)
+        
+        return Promise<UIImage> { seal in
             
-            do {
+            bgq.async {
                 
-                let imageData = try Data(contentsOf: photo.remoteURL)
-                
-                if let image = UIImage(data: imageData){
+                do {
                     
+                    let imageData =  try Data(contentsOf: photo.remoteURL)
+                    
+                    if let image = UIImage(data: imageData){
+                        
                         seal.fulfill(image)
-
-                }else {
+                        
+                    }else {
+                        
+                        seal.reject(PhotoFetchError.unableToCreatePhotoFromData)
+                    }
                     
-                    seal.reject(PhotoFetchError.unableToCreatePhotoFromData)
+                } catch {
+                    
+                    seal.reject(error)
                 }
                 
-            } catch {
-                
-                seal.reject(error)
             }
-            
         }
     }
 }

@@ -18,6 +18,8 @@
 		D073BD062244F74D00D83F76 /* Photo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073BD052244F74D00D83F76 /* Photo.swift */; };
 		D073BD082244FE7D00D83F76 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D073BD072244FE7D00D83F76 /* DetailViewController.swift */; };
 		D0FABE052248CE6400DE0E11 /* CollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FABE042248CE6400DE0E11 /* CollectionViewController.swift */; };
+		D0FABE0B2248ED6300DE0E11 /* CollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FABE0A2248ED6300DE0E11 /* CollectionViewCell.swift */; };
+		D0FABE0D22490AD300DE0E11 /* PhotoDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0FABE0C22490AD300DE0E11 /* PhotoDataSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +37,8 @@
 		D073BD052244F74D00D83F76 /* Photo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Photo.swift; sourceTree = "<group>"; };
 		D073BD072244FE7D00D83F76 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		D0FABE042248CE6400DE0E11 /* CollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewController.swift; sourceTree = "<group>"; };
+		D0FABE0A2248ED6300DE0E11 /* CollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewCell.swift; sourceTree = "<group>"; };
+		D0FABE0C22490AD300DE0E11 /* PhotoDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDataSource.swift; sourceTree = "<group>"; };
 		FB5061CE6C6C3839B8FDC809 /* Pods-JohnLennon.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JohnLennon.debug.xcconfig"; path = "Pods/Target Support Files/Pods-JohnLennon/Pods-JohnLennon.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -87,6 +91,7 @@
 				D073BCED2244DA9900D83F76 /* AppDelegate.swift */,
 				D073BCF42244DA9C00D83F76 /* Assets.xcassets */,
 				D073BCF92244DA9C00D83F76 /* Info.plist */,
+				D0FABE0C22490AD300DE0E11 /* PhotoDataSource.swift */,
 			);
 			path = JohnLennon;
 			sourceTree = "<group>";
@@ -123,6 +128,7 @@
 			children = (
 				D073BCF12244DA9900D83F76 /* Main.storyboard */,
 				D073BCF62244DA9C00D83F76 /* LaunchScreen.storyboard */,
+				D0FABE0A2248ED6300DE0E11 /* CollectionViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -236,6 +242,7 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-JohnLennon/Pods-JohnLennon-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/PromiseKit/PromiseKit.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
 			);
@@ -244,6 +251,7 @@
 			);
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/PromiseKit.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
 			);
@@ -259,8 +267,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D0FABE0D22490AD300DE0E11 /* PhotoDataSource.swift in Sources */,
 				D073BD062244F74D00D83F76 /* Photo.swift in Sources */,
 				D073BD042244E10100D83F76 /* PhotoFetcher.swift in Sources */,
+				D0FABE0B2248ED6300DE0E11 /* CollectionViewCell.swift in Sources */,
 				D073BD002244DDA400D83F76 /* FlickrAPI.swift in Sources */,
 				D073BCEE2244DA9900D83F76 /* AppDelegate.swift in Sources */,
 				D0FABE052248CE6400DE0E11 /* CollectionViewController.swift in Sources */,

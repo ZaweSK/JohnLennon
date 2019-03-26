@@ -146,13 +146,34 @@
                             <inset key="sectionInset" minX="10" minY="0.0" maxX="40" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="photoItemCell" id="twT-Hg-nse">
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" reuseIdentifier="photoItemCell" id="twT-Hg-nse" customClass="CollectionViewCell" customModule="JohnLennon" customModuleProvider="target">
                                 <rect key="frame" x="10" y="0.0" width="50" height="50"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
                                     <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Jsx-pf-4Il">
+                                            <rect key="frame" x="15" y="15" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="2Ki-uQ-ICf">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                        </imageView>
+                                    </subviews>
                                 </view>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="2Ki-uQ-ICf" secondAttribute="trailing" id="8xW-to-GYT"/>
+                                    <constraint firstAttribute="bottom" secondItem="2Ki-uQ-ICf" secondAttribute="bottom" id="D1b-rm-ctV"/>
+                                    <constraint firstItem="2Ki-uQ-ICf" firstAttribute="top" secondItem="twT-Hg-nse" secondAttribute="top" id="JI9-z9-xXO"/>
+                                    <constraint firstItem="Jsx-pf-4Il" firstAttribute="centerY" secondItem="twT-Hg-nse" secondAttribute="centerY" id="XJZ-Ux-HAP"/>
+                                    <constraint firstItem="Jsx-pf-4Il" firstAttribute="centerX" secondItem="twT-Hg-nse" secondAttribute="centerX" id="qP5-tq-oiY"/>
+                                    <constraint firstItem="2Ki-uQ-ICf" firstAttribute="leading" secondItem="twT-Hg-nse" secondAttribute="leading" id="snz-Pe-Ptv"/>
+                                </constraints>
+                                <connections>
+                                    <outlet property="imageView" destination="2Ki-uQ-ICf" id="xPF-2E-jPg"/>
+                                    <outlet property="spinner" destination="Jsx-pf-4Il" id="5WQ-9F-6Fu"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -164,7 +185,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HyB-bq-Rxe" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1026" y="217"/>
+            <point key="canvasLocation" x="1024.8" y="216.34182908545728"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="uEd-K9-WDh">
